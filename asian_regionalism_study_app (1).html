@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asian Regionalism Study Hub - MADE4Learners</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+              800: '#1e3a8a',
+              900: '#0f172a'
+            },
+            academic: {
+              gold: '#d97706',
+              burgundy: '#9f1239',
+              emerald: '#059669'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Custom Scrollbar & Utility Animations */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #334155;
+    }
+    
+    /* Flashcard Flip Animation */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-full flex flex-col font-sans transition-colors duration-200">
+
+  <!-- TOP HEADER / NAVIGATION -->
+  <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        
+        <!-- Brand Title -->
+        <div class="flex items-center space-x-3">
+          <div class="bg-brand-600 text-white p-2.5 rounded-xl shadow-md flex items-center justify-center">
+            <i class="fa-solid font-bold text-lg fa-graduation-cap"></i>
+          </div>
+          <div>
+            <h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white leading-none">
+              Asian Regionalism <span class="text-xs px-2 py-0.5 rounded bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 font-medium ml-1">MADE4Learners</span>
+            </h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Instructor: Rey R. Dela Victoria, MPA</p>
+          </div>
+        </div>
+
+        <!-- Global Action Buttons -->
+        <div class="flex items-center space-x-2 sm:space-x-4">
+          <!-- Dark Mode Toggle -->
+          <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+          </button>
+
+          <!-- Overall Mastery Badge -->
+          <div class="hidden sm:flex items-center space-x-2 bg-slate-100 dark:bg-slate-700/60 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-600">
+            <i class="fa-solid fa-award text-amber-500"></i>
+            <span class="text-xs font-semibold">Mastery: <span id="masteryPercent">0%</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row gap-6">
+
+    <!-- SIDEBAR: NAVIGATION & MODULE SELECTOR -->
+    <aside class="w-full md:w-64 flex-shrink-0 space-y-6">
+      
+      <!-- App Mode Switcher -->
+      <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <label class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2 block mb-2">Learning Mode</label>
+        <div class="space-y-1">
+          <button onclick="switchMode('notes')" id="navNotesBtn" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300">
+            <i class="fa-solid fa-book-open w-5 text-center"></i>
+            <span>Study Notes</span>
+          </button>
+          <button onclick="switchMode('flashcards')" id="navFlashcardsBtn" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition">
+            <i class="fa-solid fa-layer-group w-5 text-center"></i>
+            <span>Flashcards</span>
+          </button>
+          <button onclick="switchMode('practice')" id="navPracticeBtn" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition">
+            <i class="fa-solid fa-list-check w-5 text-center"></i>
+            <span>Practice Questions</span>
+          </button>
+          <button onclick="switchMode('critical')" id="navCriticalBtn" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition">
+            <i class="fa-solid fa-brain w-5 text-center"></i>
+            <span class="flex items-center justify-between w-full">
+              <span>Critical Thinking</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300">NEW</span>
+            </span>
+          </button>
+          <button onclick="switchMode('quiz')" id="navQuizBtn" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition">
+            <i class="fa-solid fa-pen-nib w-5 text-center"></i>
+            <span>Strict Quiz Mode</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Module Filter -->
+      <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+        <label class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">Course Modules</label>
+        
+        <button onclick="selectModule('all')" id="modAllBtn" class="w-full text-left px-3 py-2 rounded-lg text-xs font-semibold transition bg-brand-600 text-white shadow-sm">
+          All Modules (Comprehensive)
+        </button>
+        
+        <button onclick="selectModule('part1')" id="modPart1Btn" class="w-full text-left px-3 py-2 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-start space-x-2">
+          <span class="bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 px-1.5 py-0.5 rounded text-[10px] font-bold mt-0.5">P1</span>
+          <span class="leading-tight">Globalization vs. Regionalism</span>
+        </button>
+
+        <button onclick="selectModule('part2')" id="modPart2Btn" class="w-full text-left px-3 py-2 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-start space-x-2">
+          <span class="bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300 px-1.5 py-0.5 rounded text-[10px] font-bold mt-0.5">P2</span>
+          <span class="leading-tight">Middle Class & Social Safety</span>
+        </button>
+
+        <button onclick="selectModule('part3')" id="modPart3Btn" class="w-full text-left px-3 py-2 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-start space-x-2">
+          <span class="bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300 px-1.5 py-0.5 rounded text-[10px] font-bold mt-0.5">P3</span>
+          <span class="leading-tight">ASEAN Governance & EU Model</span>
+        </button>
+      </div>
+
+      <!-- Strict Professor Metric Box -->
+      <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4 rounded-xl shadow-md border border-slate-700">
+        <div class="flex items-center space-x-2 text-amber-400 mb-2">
+          <i class="fa-solid fa-user-graduate text-sm"></i>
+          <span class="text-xs font-bold uppercase tracking-wider">Exam Grading Standard</span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          "Intuitive logic is good, but full points require exact political science phrasing: <strong class="text-white">Intergovernmentalism</strong>, <strong class="text-white">Consensus-Based</strong>, and <strong class="text-white">Supranationalism</strong>."
+        </p>
+      </div>
+
+    </aside>
+
+    <!-- CONTENT AREA -->
+    <section class="flex-1 flex flex-col space-y-6">
+
+      <!-- MODE 1: STUDY NOTES / SUMMARY CARDS -->
+      <div id="notesView" class="space-y-6">
+        <div class="flex items-center justify-between bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white" id="notesTitle">Module Study Summaries</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Structured course concepts from lecture slides and professor feedback</p>
+          </div>
+          <span class="text-xs font-bold px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full" id="notesModuleBadge">All Topics</span>
+        </div>
+
+        <div id="notesContainer" class="space-y-6">
+          <!-- Dynamic Notes Injected Here -->
+        </div>
+      </div>
+
+      <!-- MODE 2: FLASHCARD MODE -->
+      <div id="flashcardsView" class="hidden space-y-6 flex-1 flex flex-col">
+        <!-- Flashcard Header -->
+        <div class="flex items-center justify-between bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Interactive Flashcards</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Flip cards to test core political science definitions and slide concepts</p>
+          </div>
+          <span id="flashcardCounter" class="text-xs font-bold px-3 py-1 bg-brand-100 text-brand-800 dark:bg-brand-900/60 dark:text-brand-300 rounded-full">Card 1 of 5</span>
+        </div>
+
+        <!-- Flip Container -->
+        <div class="flex-1 min-h-[300px] flex items-center justify-center perspective-1000">
+          <div id="flashcardInner" onclick="flipCard()" class="w-full max-w-xl h-72 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg p-8 cursor-pointer relative transform-style-3d transition-transform duration-500 flex flex-col justify-between select-none">
+            
+            <!-- Card Front -->
+            <div id="cardFront" class="absolute inset-0 p-8 backface-hidden flex flex-col justify-between">
+              <span id="cardCategoryFront" class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Category</span>
+              <div class="text-center my-auto">
+                <h3 id="cardQuestion" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Question Prompt</h3>
+                <p class="text-xs text-slate-400 mt-3 font-medium"><i class="fa-solid fa-rotate mr-1"></i> Click anywhere to reveal answer</p>
+              </div>
+              <div class="text-right text-[10px] text-slate-400 uppercase font-semibold">Front</div>
+            </div>
+
+            <!-- Card Back -->
+            <div id="cardBack" class="absolute inset-0 p-8 backface-hidden rotate-y-180 flex flex-col justify-between bg-brand-50/40 dark:bg-slate-800/90 rounded-2xl border border-brand-200 dark:border-slate-600">
+              <span id="cardCategoryBack" class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Answer Breakdown</span>
+              <div class="text-center my-auto space-y-3">
+                <p id="cardAnswer" class="text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-100 leading-relaxed">Answer Text</p>
+                <div id="cardExampleBox" class="text-xs text-slate-600 dark:text-slate-300 bg-white/80 dark:bg-slate-900/60 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 italic">Example</div>
+              </div>
+              <div class="text-right text-[10px] text-brand-600 dark:text-brand-400 uppercase font-semibold">Back</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="flex items-center justify-center space-x-4 pt-2">
+          <button onclick="prevCard()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 font-semibold text-xs text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2">
+            <i class="fa-solid fa-arrow-left"></i> Previous
+          </button>
+          <button onclick="nextCard()" class="px-5 py-2.5 rounded-xl bg-brand-600 text-white font-semibold text-xs hover:bg-brand-700 transition shadow-md flex items-center gap-2">
+            Next <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- MODE 3: DEDICATED PRACTICE QUESTIONS BANK -->
+      <div id="practiceView" class="hidden space-y-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm gap-3">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Practice Question Repository</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Complex multi-statement items & key essay drills</p>
+          </div>
+          <button onclick="toggleAllPracticeAnswers()" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-eye"></i> Toggle All Answer Keys
+          </button>
+        </div>
+
+        <div id="practiceQuestionsContainer" class="space-y-6">
+          <!-- Dynamically Injected -->
+        </div>
+      </div>
+
+      <!-- MODE 4: CRITICAL THINKING & CASE ANALYSIS -->
+      <div id="criticalView" class="hidden space-y-6">
+        
+        <!-- Header Banner -->
+        <div class="bg-gradient-to-r from-slate-900 via-brand-900 to-slate-900 text-white p-6 rounded-2xl shadow-md border border-slate-700 space-y-2">
+          <div class="flex items-center space-x-2 text-amber-400">
+            <i class="fa-solid fa-brain text-lg"></i>
+            <span class="text-xs font-bold uppercase tracking-wider">High-Level Geopolitical & Economic Analysis</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">Critical Thinking Practice Scenarios</h2>
+          <p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+            Test your ability to evaluate real-world regional dilemmas. Apply concepts like <em>Intergovernmentalism</em>, <em>Generative vs. Externalist Views</em>, and the <em>Middle-Class Squeeze</em> to multi-dimensional regional challenges.
+          </p>
+        </div>
+
+        <!-- Critical Thinking Cards Container -->
+        <div id="criticalContainer" class="space-y-6">
+          <!-- Dynamically Populated -->
+        </div>
+
+      </div>
+
+      <!-- MODE 5: STRICT QUIZ MODE -->
+      <div id="quizView" class="hidden space-y-6">
+        
+        <!-- Quiz Header Dashboard -->
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>Strict Professor Mock Exam</span>
+              <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300">A+ Grading Scale</span>
+            </h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Evaluates both your conceptual accuracy and political science phrasing.</p>
+          </div>
+          
+          <div class="flex items-center space-x-3 w-full sm:w-auto">
+            <div class="flex-1 sm:flex-initial bg-slate-100 dark:bg-slate-700/60 px-3 py-1.5 rounded-lg text-center">
+              <span class="block text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">Current Score</span>
+              <span id="quizScoreText" class="text-sm font-extrabold text-brand-600 dark:text-brand-400">0 / 0</span>
+            </div>
+            <button onclick="restartQuiz()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition">
+              <i class="fa-solid fa-rotate-right mr-1"></i> Reset
+            </button>
+          </div>
+        </div>
+
+        <!-- Question Container -->
+        <div id="questionCard" class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-md space-y-6">
+          
+          <!-- Question Header Info -->
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700/80 pb-4">
+            <span id="quizQuestionNum" class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Question 1 of 8</span>
+            <span id="quizTypeBadge" class="text-xs px-2.5 py-1 rounded-md font-semibold bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300">Multiple Choice</span>
+          </div>
+
+          <!-- Question Prompt -->
+          <h3 id="quizQuestionPrompt" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-relaxed">
+            Loading question...
+          </h3>
+
+          <!-- Options Grid (For Multiple Choice) -->
+          <div id="quizOptionsContainer" class="space-y-3">
+            <!-- Options dynamically generated -->
+          </div>
+
+          <!-- Short Answer Input Box (For Essay Questions) -->
+          <div id="shortAnswerContainer" class="hidden space-y-3">
+            <textarea id="essayInput" rows="4" placeholder="Draft your response here using key academic terminology (e.g. Intergovernmentalism, Consensus, Social Protection)..." class="w-full p-4 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition"></textarea>
+            <button onclick="submitEssayAnswer()" class="w-full py-3 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition shadow-md">
+              Submit Essay for Academic Grading
+            </button>
+          </div>
+
+          <!-- Feedback Box -->
+          <div id="feedbackBox" class="hidden p-5 rounded-xl border space-y-3">
+            <div class="flex items-center justify-between">
+              <span id="feedbackGradeTitle" class="font-bold text-sm flex items-center gap-2"></span>
+              <span id="feedbackScoreBadge" class="text-xs font-bold px-2 py-0.5 rounded"></span>
+            </div>
+            <p id="feedbackText" class="text-xs sm:text-sm leading-relaxed"></p>
+            <div id="professorTip" class="bg-white/60 dark:bg-slate-900/60 p-3 rounded-lg text-xs italic space-y-1">
+              <!-- Professor tip injected here -->
+            </div>
+            <div class="pt-2 flex justify-end">
+              <button onclick="nextQuestion()" class="px-5 py-2 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-xs hover:opacity-90 transition flex items-center space-x-2">
+                <span>Continue Exam</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-4 mt-auto text-center text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-7xl mx-auto px-4">
+      Asian Regionalism Study Companion &bull; MADE4Learners Educational Framework &bull; Rey R. Dela Victoria, MPA
+    </div>
+  </footer>
+
+  <!-- SCRIPT & DATA ARCHITECTURE -->
+  <script>
+    // ==========================================
+    // GLOBAL STATE VARIABLES & BASE DATA SETS
+    // ==========================================
+    let currentMode = 'notes';
+    let currentModule = 'all';
+
+    let cardIndex = 0;
+    let isFlipped = false;
+    let filteredCards = [];
+
+    let quizIndex = 0;
+    let quizScore = 0;
+    let filteredQuiz = [];
+
+    // --- STUDY NOTES DATA ---
+    const STUDY_NOTES = [
+      {
+        id: 'sn-1',
+        module: 'part1',
+        title: 'Globalization vs. Regionalism & Frameworks',
+        tag: 'Part 1: Steger & Dela Victoria',
+        content: `
+          <ul class="list-disc ml-5 space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+            <li><strong>Globalization (Steger, 2013):</strong> Expansion & intensification of global social relations across time and space. Core claims: market liberalization, deregulation, inevitability, no single entity in charge, and long-run benefits.</li>
+            <li><strong>Regionalism:</strong> Formal intergovernmental process of collaboration among two or more states expressing shared identity, purpose, and collective institutional action.</li>
+            <li><strong>Three Views of Asia in Globalization:</strong>
+              <br>1. <em>Externalist View:</em> Asia as a passive object impacted by colonialism, WWII, IMF/WB structural adjustments, and Western cultural homogenization ("McWorld", wheat replacing rice).
+              <br>2. <em>Generative View:</em> Asia as an active springboard driving global trade (spices, manufacturing, IT in India, BPOs & OFW remittances in PH).
+              <br>3. <em>Alternative to Globalization:</em> Anti-global impulses (e.g. historical Greater East Asia Co-Prosperity Sphere, EAEC without Western states, Asian Monetary Fund, local currency networks like Santi Suk, and the "Asian Way" prioritizing community and consensus over individualism).</li>
+          </ul>
+        `
+      },
+      {
+        id: 'sn-2',
+        module: 'part2',
+        title: 'Economic Growth Waves & Middle Class Formation',
+        tag: 'Part 2: 4 Waves & Middle-Class Squeeze',
+        content: `
+          <ul class="list-disc ml-5 space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+            <li><strong>Four Waves of Development:</strong>
+              <br>• 1st Wave (1950s–70s): Japan ("Japanese Economic Miracle").
+              <br>• 2nd Wave (1970s–90s): Asian Tigers (South Korea, Taiwan, Hong Kong, Singapore).
+              <br>• 3rd Wave (1980s–90s): Southeast Asian Nations (Thailand, Malaysia, Indonesia, Philippines—driven by BPO, OFWs, manufacturing).
+              <br>• 4th Wave (1970s–Present): Urban Centers in China (Deng Xiaoping 1978 reforms, SEZs).</li>
+            <li><strong>Middle Class Profile & Importance:</strong> People situated between the poor and wealthy with stable income, purchasing power, education, and savings. They drive regionalism through intra-regional trade (buying Korean/Japanese/Chinese goods), tourism across Asia, FDI attraction, and supporting ASEAN integration.</li>
+            <li><strong>The "Middle-Class Squeeze":</strong> Households are too "rich" to qualify for government poverty assistance, yet too financially fragile to survive major economic shocks. Mandates public services, job upgrading, and social safety nets beyond the poverty line.</li>
+          </ul>
+        `
+      },
+      {
+        id: 'sn-3',
+        module: 'part3',
+        title: 'ASEAN Integration: Intergovernmentalism vs. Supranationalism',
+        tag: 'Part 3: Bangkok Declaration & EU Model',
+        content: `
+          <ul class="list-disc ml-5 space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+            <li><strong>Founding of ASEAN:</strong> August 8, 1967 (Bangkok Declaration) by 5 Founding Fathers: Adam Malik (ID), Narciso R. Ramos (PH), Tun Abdul Razak (MY), S. Rajaratnam (SG), Thanat Khoman (TH).</li>
+            <li><strong>Intergovernmentalism (The "ASEAN Way"):</strong> Integration based strictly on non-interference in domestic affairs, state sovereignty, and 100% unanimous consensus. Benefit: protects regional stability and sovereignty. Weakness: progress can stall when member states disagree.</li>
+            <li><strong>Supranationalism (European Union):</strong> Member states pool sovereignty to a central authority that can override national decisions and pass binding majority votes.</li>
+            <li><strong>ASEAN Community Pillars (Vision 2015/2025):</strong> Political-Security Community, Economic Community (Single Market & Production Base), and Socio-Cultural Community.</li>
+          </ul>
+        `
+      }
+    ];
+
+    // --- FLASHCARDS DATA ---
+    const FLASHCARDS = [
+      { category: 'Part 1: Frameworks', front: 'What is Regionalism?', back: 'The formal intergovernmental process of collaboration between states expressing a common sense of identity and purpose through regional institutions.', example: 'ASEAN regional agreements' },
+      { category: 'Part 1: Views', front: 'Difference: Externalist vs. Generative View', back: 'Externalist views Asia as passively impacted by Western globalization. Generative views Asia as an active springboard driving global trade, services, and labor.', example: 'Generative: PH BPOs and OFW remittances' },
+      { category: 'Part 2: Growth Waves', front: 'Who are the Four Asian Tigers (2nd Wave)?', back: 'South Korea, Taiwan, Hong Kong, and Singapore—renowned for exceptionally rapid export-led economic growth from the 1970s to 1990s.', example: 'Samsung (Korea), TSMC (Taiwan)' },
+      { category: 'Part 2: Middle Class', front: 'What is the "Middle-Class Squeeze"?', back: 'A condition where middle-class households are too "rich" for government poverty aid, but too fragile to withstand major economic shocks without social protection.', example: 'Vulnerability to medical emergencies or sudden job loss' },
+      { category: 'Part 3: Governance', front: 'Intergovernmentalism vs. Supranationalism', back: 'Intergovernmentalism respects national sovereignty and non-interference (ASEAN). Supranationalism pools sovereignty into a central body with binding majority votes (EU).', example: 'ASEAN 100% consensus vs. EU binding directives' }
+    ];
+
+    // --- EXTENSIVE PRACTICE QUESTIONS DATA BANK ---
+    const EXTENSIVE_PRACTICE_BANK = [
+      {
+        id: 'pb-1',
+        module: 'part1',
+        title: 'Multi-Statement Question 1: Views of Asia in Globalization',
+        type: 'statement',
+        prompt: 'Evaluate the validity of the following statements regarding Asia’s role in global history:',
+        statements: [
+          'Statement I: The Externalist view characterizes Asia primarily as an object passively impacted by Western colonial rule, IMF/WB policies, and cultural McWorld influences.',
+          'Statement II: The Generative view argues that early modern global economy was centered in Asia through historical trade networks like the Spice Trade.',
+          'Statement III: Steger (2013) defines globalization as the formal intergovernmental collaboration restricted exclusively to geographical boundaries.'
+        ],
+        answerKey: 'Statements I and II are True; Statement III is False.',
+        explanation: 'Statement III is False because Steger defines Globalization as the global expansion and intensification of social relations across world time and space. Regionalism—not globalization—is defined as formal intergovernmental collaboration within a geographical region.'
+      },
+      {
+        id: 'pb-2',
+        module: 'part2',
+        title: 'Multi-Statement Question 2: Economic Waves & The Middle-Class Squeeze',
+        type: 'statement',
+        prompt: 'Analyze the following economic wave and social protection statements:',
+        statements: [
+          'Statement I: The Third Wave of Southeast Asian development (Thailand, Malaysia, Indonesia, Philippines) relies heavily on BPOs, OFW remittances, and natural resources alongside manufacturing.',
+          'Statement II: The "Middle-Class Squeeze" describes households that are too poor to work, forcing them into full government assistance.',
+          'Statement III: Increased purchasing power among middle-class consumers actively drives intra-regional trade in Asia by creating high demand for imported products from neighboring Asian nations.'
+        ],
+        answerKey: 'Statements I and III are True; Statement II is False.',
+        explanation: 'Statement II is False because the "Middle-Class Squeeze" refers to households that are too "rich" to qualify for poverty assistance, yet remain financially fragile against major economic shocks.'
+      },
+      {
+        id: 'pb-3',
+        module: 'part3',
+        title: 'Multi-Statement Question 3: Intergovernmentalism vs. Supranationalism',
+        type: 'statement',
+        prompt: 'Evaluate the governance mechanisms of ASEAN and the European Union:',
+        statements: [
+          'Statement I: Intergovernmentalism in ASEAN is rooted in the principle of non-interference and respect for national sovereignty.',
+          'Statement II: The European Union operates on Supranationalism, where member states pool sovereignty to allow central bodies to make binding decisions.',
+          'Statement III: ASEAN decision-making is strictly based on majority voting, allowing 6 out of 10 countries to override member objections.'
+        ],
+        answerKey: 'Statements I and II are True; Statement III is False.',
+        explanation: 'Statement III is False because ASEAN decision-making relies strictly on 100% consensus (unanimity) and the "ASEAN Way", not simple majority voting.'
+      },
+      {
+        id: 'pb-4',
+        module: 'part2',
+        title: 'Academic Practice Essay: Social Protection & Productivity',
+        type: 'essay',
+        prompt: 'Explain why social protection beyond basic poverty lines is essential for maintaining middle-class productivity in Southeast Asia.',
+        keywords: ['middle-class squeeze', 'social protection', 'fragile', 'productivity', 'public services', 'safety nets'],
+        rubric: 'Full marks require referencing the "Middle-Class Squeeze" (households above the poverty line facing financial fragility) and identifying how state-supported safety nets protect worker stability and job performance.'
+      }
+    ];
+
+    // --- QUIZ DATA ---
+    const QUIZ_QUESTIONS = [
+      {
+        id: 'q-1',
+        module: 'part3',
+        type: 'statement',
+        prompt: 'Evaluate the following statements regarding ASEAN Decision-Making and Integration:',
+        statements: [
+          'Statement I: ASEAN operates under Intergovernmentalism, prioritizing national sovereignty and the principle of non-interference in domestic affairs.',
+          'Statement II: The European Union operates as a Supranational body where member states pool sovereignty to enforce binding majority decisions.',
+          'Statement III: ASEAN decisions are made via majority vote, allowing policies to pass even if member nations disagree.'
+        ],
+        options: [
+          'Statements I, II, and III are all True',
+          'Statements I and II are True; Statement III is False',
+          'Statement I is True; Statements II and III are False',
+          'Statements I and III are False; Statement II is True'
+        ],
+        answer: 1,
+        explanation: 'Statements I and II are True. Statement III is False because ASEAN relies on 100% unanimous consensus ("The ASEAN Way"), meaning a single nation can stall a decision.'
+      },
+      {
+        id: 'q-2',
+        module: 'part2',
+        type: 'mc',
+        prompt: 'According to course lecture slides, why is the growing Asian Middle Class vital to regional integration?',
+        options: [
+          'They eliminate the need for foreign direct investment across Southeast Asia.',
+          'They drive intra-regional trade, cross-border tourism, and demand for regional transport and free trade.',
+          'They replace government institutions by enforcing supranational laws.',
+          'They lower national educational standards across ASEAN.'
+        ],
+        answer: 1,
+        explanation: 'The middle class drives regionalism by buying imports from neighboring Asian countries, traveling within Asia, and demanding ASEAN transport and trade connectivity.'
+      },
+      {
+        id: 'q-3',
+        module: 'part2',
+        type: 'essay',
+        prompt: 'How does government social protection address the "Middle-Class Squeeze"?',
+        keywords: ['middle-class squeeze', 'fragile', 'poverty line', 'social protection', 'safety nets'],
+        rubric: 'Must state that middle-class workers are too "rich" for poverty welfare but too fragile for major shocks, requiring social protection and safety nets.'
+      }
+    ];
+
+    // --- CRITICAL THINKING & CASE ANALYSIS DATA ---
+    const CRITICAL_THINKING_CASES = [
+      {
+        id: 'ct-1',
+        module: 'part3',
+        title: 'Case Study 1: Maritime Disputes & Consensus Gridlock in ASEAN',
+        scenario: 'A major security crisis arises in the South China Sea involving member states. Several member states push for a strong, unified ASEAN statement, but one member state closely aligned with external powers vetoes the joint declaration during a summit.',
+        prompt: 'Evaluate this scenario using the concepts of Intergovernmentalism, Supranationalism, and Consensus-Based Decision Making. What does this reveal about the strengths and limitations of the "ASEAN Way"?',
+        keywords: ['intergovernmentalism', 'sovereignty', 'consensus', 'non-interference', 'supranationalism', 'gridlock'],
+        rubric: `
+          <strong class="font-bold text-slate-900 dark:text-white block mb-1">Professor Model Evaluation Rubric:</strong>
+          <ul class="list-disc ml-5 space-y-1 text-slate-700 dark:text-slate-300">
+            <li><strong>Institutional Framework:</strong> Highlight that ASEAN operates under <em>Intergovernmentalism</em> and strictly upholds national <em>sovereignty</em> and <em>non-interference</em>.</li>
+            <li><strong>Core Limitation:</strong> Explain that requiring 100% <em>unanimous consensus</em> allows a single nation to stall decisive collective action (gridlock).</li>
+            <li><strong>Supranational Comparison:</strong> Contrast this with a <em>Supranational</em> model (like the EU), which uses majority voting to override individual state vetoes.</li>
+          </ul>
+        `
+      },
+      {
+        id: 'ct-2',
+        module: 'part2',
+        title: 'Case Study 2: AI Automation & The Third Wave Middle-Class Squeeze',
+        scenario: 'In Third Wave economies like the Philippines and Thailand, rapid advancements in Artificial Intelligence threaten lower-tier Business Process Outsourcing (BPO) and routine manufacturing jobs that originally lifted millions into the middle class.',
+        prompt: 'Analyze how AI disruption impacts middle-class self-sustainability and explain why state social protection must evolve beyond basic poverty line safety nets.',
+        keywords: ['middle-class squeeze', 'social protection', 'fragile', 'productivity', 'poverty line', 'safety nets', 'services'],
+        rubric: `
+          <strong class="font-bold text-slate-900 dark:text-white block mb-1">Professor Model Evaluation Rubric:</strong>
+          <ul class="list-disc ml-5 space-y-1 text-slate-700 dark:text-slate-300">
+            <li><strong>The Squeeze:</strong> Identify that middle-class workers in BPO/services face the <em>Middle-Class Squeeze</em>—they are too "rich" for poverty assistance, yet financially <em>fragile</em> against structural job displacement.</li>
+            <li><strong>State Role:</strong> Argue that government interventions must expand <em>social protection</em>, productive job upgrading, and public services to prevent vulnerable households from falling back into poverty.</li>
+          </ul>
+        `
+      },
+      {
+        id: 'ct-3',
+        module: 'part1',
+        title: 'Case Study 3: Asian Monetary Autonomy vs. Global Financial Dependency',
+        scenario: 'During regional financial turbulence, Asian nations debate establishing an autonomous Asian Financial Mechanism to handle liquidity shocks without relying on IMF structural adjustment requirements.',
+        prompt: 'Examine this initiative through the lens of the Generative View and the "Region as an Alternative to Globalization".',
+        keywords: ['generative', 'alternative', 'externalist', 'asian way', 'sovereignty', 'autonomy'],
+        rubric: `
+          <strong class="font-bold text-slate-900 dark:text-white block mb-1">Professor Model Evaluation Rubric:</strong>
+          <ul class="list-disc ml-5 space-y-1 text-slate-700 dark:text-slate-300">
+            <li><strong>Generative/Alternative Framing:</strong> Position the initiative as a <em>Generative View</em> action—Asia acting as an active creator of its own regional monetary architecture rather than a passive recipient of Western policies (Externalist view).</li>
+            <li><strong>Regional Paradigm:</strong> Connect to historical attempts like the Asian Monetary Fund (AMF) and the <em>Asian Way</em> seeking self-sufficiency and regional harmony.</li>
+          </ul>
+        `
+      }
+    ];
+
+    // ==========================================
+    // INITIALIZATION & RENDER FUNCTIONS
+    // ==========================================
+    window.onload = function() {
+      renderNotes();
+      initPracticeBank();
+      initCriticalCases();
+    };
+
+    function renderNotes() {
+      const container = document.getElementById('notesContainer');
+      if (!container) return;
+
+      const filtered = currentModule === 'all' 
+        ? STUDY_NOTES 
+        : STUDY_NOTES.filter(n => n.module === currentModule);
+
+      const items = filtered.length > 0 ? filtered : STUDY_NOTES;
+
+      container.innerHTML = items.map(n => `
+        <article class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+            <h3 class="font-bold text-slate-900 dark:text-white text-base sm:text-lg">${n.title}</h3>
+            <span class="text-[11px] font-bold px-2.5 py-0.5 rounded bg-brand-100 text-brand-800 dark:bg-brand-900/60 dark:text-brand-300">${n.tag}</span>
+          </div>
+          <div>${n.content}</div>
+        </article>
+      `).join('');
+    }
+
+    function initFlashcards() {
+      cardIndex = 0;
+      isFlipped = false;
+      renderFlashcard();
+    }
+
+    function renderFlashcard() {
+      if (FLASHCARDS.length === 0) return;
+      const card = FLASHCARDS[cardIndex];
+      
+      const inner = document.getElementById('flashcardInner');
+      if (inner) {
+        if (isFlipped) {
+          inner.classList.add('rotate-y-180');
+        } else {
+          inner.classList.remove('rotate-y-180');
+        }
+      }
+
+      document.getElementById('flashcardCounter').textContent = `Card ${cardIndex + 1} of ${FLASHCARDS.length}`;
+      document.getElementById('cardCategoryFront').textContent = card.category;
+      document.getElementById('cardCategoryBack').textContent = card.category;
+      document.getElementById('cardQuestion').textContent = card.front;
+      document.getElementById('cardAnswer').textContent = card.back;
+      document.getElementById('cardExampleBox').textContent = `Example: ${card.example}`;
+    }
+
+    function flipCard() {
+      isFlipped = !isFlipped;
+      const inner = document.getElementById('flashcardInner');
+      if (inner) inner.classList.toggle('rotate-y-180', isFlipped);
+    }
+
+    function nextCard() {
+      isFlipped = false;
+      cardIndex = (cardIndex + 1) % FLASHCARDS.length;
+      renderFlashcard();
+    }
+
+    function prevCard() {
+      isFlipped = false;
+      cardIndex = (cardIndex - 1 + FLASHCARDS.length) % FLASHCARDS.length;
+      renderFlashcard();
+    }
+
+    function initPracticeBank() {
+      const container = document.getElementById('practiceQuestionsContainer');
+      if (!container) return;
+
+      const filtered = currentModule === 'all' 
+        ? EXTENSIVE_PRACTICE_BANK 
+        : EXTENSIVE_PRACTICE_BANK.filter(q => q.module === currentModule);
+
+      const items = filtered.length > 0 ? filtered : EXTENSIVE_PRACTICE_BANK;
+
+      container.innerHTML = items.map((q, idx) => `
+        <article class="bg-white dark:bg-slate-800 p-6 sm:p-7 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">${q.title}</span>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300">
+              ${q.type === 'statement' ? 'Multi-Statement' : 'Practice Essay'}
+            </span>
+          </div>
+
+          <p class="text-sm font-bold text-slate-900 dark:text-white leading-relaxed">${q.prompt}</p>
+
+          ${q.type === 'statement' ? `
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-2 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
+              ${q.statements.map(s => `<p class="leading-relaxed">${s}</p>`).join('')}
+            </div>
+            
+            <button onclick="togglePracticeAnswer(${idx})" class="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1 pt-1">
+              <span>Show / Hide Correct Statement Analysis</span>
+              <i class="fa-solid fa-chevron-down text-[10px]"></i>
+            </button>
+
+            <div id="practiceAnswerKey_${idx}" class="hidden p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-xs sm:text-sm space-y-2">
+              <p class="font-bold text-emerald-900 dark:text-emerald-300"><i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Answer Key: ${q.answerKey}</p>
+              <p class="text-slate-700 dark:text-slate-300 leading-relaxed">${q.explanation}</p>
+            </div>
+          ` : `
+            <div class="space-y-3">
+              <textarea id="practiceEssay_${idx}" rows="3" placeholder="Draft your answer here..." class="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition"></textarea>
+              <button onclick="evaluatePracticeEssay(${idx}, '${q.keywords.join(',')}')" class="px-4 py-2 bg-brand-600 text-white font-semibold rounded-lg text-xs hover:bg-brand-700 transition">
+                Evaluate Practice Phrasing
+              </button>
+              <div id="practiceEssayResult_${idx}" class="hidden p-3 rounded-lg text-xs"></div>
+            </div>
+          `}
+        </article>
+      `).join('');
+    }
+
+    function togglePracticeAnswer(idx) {
+      const el = document.getElementById(`practiceAnswerKey_${idx}`);
+      if (el) el.classList.toggle('hidden');
+    }
+
+    function toggleAllPracticeAnswers() {
+      const answers = document.querySelectorAll('[id^="practiceAnswerKey_"]');
+      if (answers.length === 0) return;
+      const shouldHide = !answers[0].classList.contains('hidden');
+      answers.forEach(a => {
+        if (shouldHide) a.classList.add('hidden');
+        else a.classList.remove('hidden');
+      });
+    }
+
+    function selectModule(mod) {
+      currentModule = mod;
+      ['all', 'part1', 'part2', 'part3'].forEach(m => {
+        const btn = document.getElementById(`mod${m.charAt(0).toUpperCase() + m.slice(1)}Btn`);
+        if (!btn) return;
+        if (m === mod) {
+          btn.className = 'w-full text-left px-3 py-2 rounded-lg text-xs font-semibold transition bg-brand-600 text-white shadow-sm';
+        } else {
+          btn.className = 'w-full text-left px-3 py-2 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-start space-x-2';
+        }
+      });
+
+      renderNotes();
+      if (currentMode === 'practice') initPracticeBank();
+      if (currentMode === 'critical') initCriticalCases();
+      if (currentMode === 'quiz') restartQuiz();
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      document.getElementById('themeIcon').className = isDark ? 'fa-solid fa-sun text-lg text-amber-400' : 'fa-solid fa-moon text-lg';
+    }
+
+    // ==========================================
+    // INITIALIZATION & MODE CONTROLLER
+    // ==========================================
+    function switchMode(mode) {
+      currentMode = mode;
+      
+      // Update Sidebar Nav Styling
+      ['notes', 'flashcards', 'practice', 'critical', 'quiz'].forEach(m => {
+        const btn = document.getElementById(`nav${m.charAt(0).toUpperCase() + m.slice(1)}Btn`);
+        if (!btn) return;
+        if (m === mode) {
+          btn.className = 'w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300';
+        } else {
+          btn.className = 'w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition';
+        }
+      });
+
+      // Show/Hide View Containers
+      document.getElementById('notesView').classList.toggle('hidden', mode !== 'notes');
+      document.getElementById('flashcardsView').classList.toggle('hidden', mode !== 'flashcards');
+      document.getElementById('practiceView').classList.toggle('hidden', mode !== 'practice');
+      document.getElementById('criticalView').classList.toggle('hidden', mode !== 'critical');
+      document.getElementById('quizView').classList.toggle('hidden', mode !== 'quiz');
+
+      if (mode === 'flashcards') initFlashcards();
+      if (mode === 'practice') initPracticeBank();
+      if (mode === 'critical') initCriticalCases();
+      if (mode === 'quiz') restartQuiz();
+    }
+
+    // ==========================================
+    // CRITICAL THINKING CONTROLLER
+    // ==========================================
+    function initCriticalCases() {
+      const container = document.getElementById('criticalContainer');
+      if (!container) return;
+
+      const filtered = currentModule === 'all' 
+        ? CRITICAL_THINKING_CASES 
+        : CRITICAL_THINKING_CASES.filter(c => c.module === currentModule);
+
+      const items = filtered.length > 0 ? filtered : CRITICAL_THINKING_CASES;
+
+      container.innerHTML = items.map((c, idx) => `
+        <article class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-md space-y-5">
+          
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-microscope"></i>
+              <span>${c.module.toUpperCase()} Scenario Analysis</span>
+            </span>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-amber-100 text-amber-900 dark:bg-amber-950/80 dark:text-amber-300">
+              Critical Thinking Task
+            </span>
+          </div>
+
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug">${c.title}</h3>
+
+          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-800 dark:text-slate-200 space-y-2 leading-relaxed">
+            <strong class="font-bold text-slate-900 dark:text-white block uppercase tracking-wider text-[11px] text-brand-600 dark:text-brand-400">Background Scenario:</strong>
+            <p>${c.scenario}</p>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white">${c.prompt}</h4>
+            
+            <textarea id="ctInput_${idx}" rows="4" placeholder="Draft your critical analysis here. Incorporate key academic concepts..." class="w-full p-4 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-xs sm:text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none transition"></textarea>
+            
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+              <button onclick="evaluateCriticalEssay(${idx}, '${c.keywords.join(',')}')" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs transition shadow-md flex items-center gap-2">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Evaluate Analytical Phrasing</span>
+              </button>
+
+              <button onclick="toggleCriticalRubric(${idx})" class="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1">
+                <span>Toggle Model Analytical Breakdown</span>
+                <i class="fa-solid fa-chevron-down text-[10px]"></i>
+              </button>
+            </div>
+
+            <div id="ctFeedback_${idx}" class="hidden p-4 rounded-xl text-xs space-y-2"></div>
+            
+            <div id="ctRubric_${idx}" class="hidden p-5 rounded-xl bg-slate-100 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 text-xs sm:text-sm leading-relaxed space-y-2">
+              ${c.rubric}
+            </div>
+          </div>
+
+        </article>
+      `).join('');
+    }
+
+    function evaluateCriticalEssay(idx, kwString) {
+      const text = (document.getElementById(`ctInput_${idx}`).value || '').toLowerCase();
+      const keywords = kwString.split(',');
+      const matched = keywords.filter(kw => text.includes(kw));
+      const resEl = document.getElementById(`ctFeedback_${idx}`);
+      
+      resEl.classList.remove('hidden');
+
+      if (matched.length >= 3) {
+        resEl.className = 'p-4 rounded-xl text-xs bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 space-y-1';
+        resEl.innerHTML = `
+          <strong class="font-bold flex items-center gap-1 text-sm"><i class="fa-solid fa-award text-emerald-600"></i> High-Level Academic Analysis!</strong>
+          <p>Matched concepts: <em>${matched.join(', ')}</em>. Excellent multi-dimensional critical reasoning.</p>
+        `;
+      } else {
+        resEl.className = 'p-4 rounded-xl text-xs bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200 space-y-1';
+        resEl.innerHTML = `
+          <strong class="font-bold flex items-center gap-1 text-sm"><i class="fa-solid fa-lightbulb text-amber-600"></i> Solid Start — Add Formal Academic Frameworks</strong>
+          <p>You matched ${matched.length} term(s). Strengthen your answer by explicitly incorporating: <em>${keywords.slice(0, 4).join(', ')}</em>.</p>
+        `;
+      }
+    }
+
+    function toggleCriticalRubric(idx) {
+      const el = document.getElementById(`ctRubric_${idx}`);
+      if (el) el.classList.toggle('hidden');
+    }
+
+    function evaluatePracticeEssay(idx, kwString) {
+      const text = (document.getElementById(`practiceEssay_${idx}`).value || '').toLowerCase();
+      const keywords = kwString.split(',');
+      const matched = keywords.filter(kw => text.includes(kw));
+      const resEl = document.getElementById(`practiceEssayResult_${idx}`);
+      
+      resEl.classList.remove('hidden');
+
+      if (matched.length >= 3) {
+        resEl.className = 'p-3 rounded-lg text-xs bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 space-y-1';
+        resEl.innerHTML = `
+          <strong class="font-bold flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-600"></i> A+ Grade Response!</strong>
+          <p>Matched terms: <em>${matched.join(', ')}</em>. Excellent academic terminology.</p>
+        `;
+      } else {
+        resEl.className = 'p-3 rounded-lg text-xs bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200 space-y-1';
+        resEl.innerHTML = `
+          <strong class="font-bold flex items-center gap-1"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> B/C Grade (Add Key Terminology)</strong>
+          <p>You matched ${matched.length} key term(s). Incorporate terms like: <em>${keywords.slice(0, 4).join(', ')}</em> to reach an A+ standard.</p>
+        `;
+      }
+    }
+
+    // ==========================================
+    // MODE 4: STRICT QUIZ CONTROLLER
+    // ==========================================
+    function restartQuiz() {
+      filteredQuiz = currentModule === 'all' 
+        ? [...QUIZ_QUESTIONS] 
+        : QUIZ_QUESTIONS.filter(q => q.module === currentModule);
+
+      if (filteredQuiz.length === 0) filteredQuiz = [...QUIZ_QUESTIONS];
+      
+      quizIndex = 0;
+      quizScore = 0;
+      updateQuizScoreUI();
+      renderQuestion();
+    }
+
+    function updateQuizScoreUI() {
+      document.getElementById('quizScoreText').textContent = `${quizScore} / ${filteredQuiz.length}`;
+    }
+
+    function renderQuestion() {
+      const q = filteredQuiz[quizIndex];
+      const feedbackBox = document.getElementById('feedbackBox');
+      feedbackBox.classList.add('hidden');
+
+      document.getElementById('quizQuestionNum').textContent = `Question ${quizIndex + 1} of ${filteredQuiz.length}`;
+      
+      let badgeLabel = 'Multiple Choice';
+      if (q.type === 'statement') badgeLabel = 'Complex Multi-Statement';
+      if (q.type === 'essay') badgeLabel = 'Academic Essay';
+      document.getElementById('quizTypeBadge').textContent = badgeLabel;
+
+      const promptContainer = document.getElementById('quizQuestionPrompt');
+      
+      // Inject Prompt & Statements if available
+      if (q.type === 'statement' && q.statements) {
+        promptContainer.innerHTML = `
+          <div class="space-y-3">
+            <p class="text-slate-900 dark:text-white font-bold">${q.prompt}</p>
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-700/60 border border-slate-200 dark:border-slate-600 space-y-2 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
+              ${q.statements.map(s => `<p class="leading-relaxed">${s}</p>`).join('')}
+            </div>
+          </div>
+        `;
+      } else {
+        promptContainer.textContent = q.prompt;
+      }
+
+      const optsContainer = document.getElementById('quizOptionsContainer');
+      const saContainer = document.getElementById('shortAnswerContainer');
+
+      if (q.type === 'mc' || q.type === 'statement') {
+        optsContainer.classList.remove('hidden');
+        saContainer.classList.add('hidden');
+
+        optsContainer.innerHTML = q.options.map((opt, i) => `
+          <button onclick="submitMCAnswer(${i})" class="w-full text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 hover:border-brand-500 hover:bg-brand-50/50 dark:hover:bg-brand-900/20 text-xs sm:text-sm font-semibold transition flex items-center justify-between group">
+            <span class="text-slate-800 dark:text-slate-200">${opt}</span>
+            <i class="fa-regular fa-circle text-slate-400 group-hover:text-brand-500 flex-shrink-0 ml-2"></i>
+          </button>
+        `).join('');
+      } else {
+        optsContainer.classList.add('hidden');
+        saContainer.classList.remove('hidden');
+        document.getElementById('essayInput').value = '';
+      }
+    }
+
+    function submitMCAnswer(selectedIndex) {
+      const q = filteredQuiz[quizIndex];
+      const isCorrect = selectedIndex === q.answer;
+
+      if (isCorrect) quizScore++;
+      updateQuizScoreUI();
+      showFeedback(isCorrect, isCorrect ? 'A+ Grade (100%)' : 'Incorrect Statement Analysis', q.explanation);
+    }
+
+    function submitEssayAnswer() {
+      const q = filteredQuiz[quizIndex];
+      const text = document.getElementById('essayInput').value.toLowerCase();
+      
+      // Keyword matching evaluation
+      const matched = q.keywords.filter(kw => text.includes(kw));
+      const scoreRatio = matched.length / q.keywords.length;
+
+      let gradeTitle = 'A+ Grade (Outstanding Phrasing)';
+      let isPass = true;
+
+      if (scoreRatio < 0.3) {
+        gradeTitle = 'C Grade (Needs Political Science Terms)';
+        isPass = false;
+      } else if (scoreRatio < 0.6) {
+        gradeTitle = 'B+ Grade (Good Logic, Add Terminology)';
+      }
+
+      if (isPass) quizScore++;
+      updateQuizScoreUI();
+
+      const explanation = `
+        <strong>Strict Professor Feedback:</strong> You included ${matched.length} key concepts (${matched.join(', ')}). 
+        <br><br>${q.rubric}
+      `;
+
+      showFeedback(isPass, gradeTitle, explanation);
+    }
+
+    function showFeedback(isSuccess, gradeTitle, text) {
+      const box = document.getElementById('feedbackBox');
+      box.classList.remove('hidden');
+
+      if (isSuccess) {
+        box.className = 'p-5 rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 space-y-3';
+        document.getElementById('feedbackGradeTitle').className = 'font-bold text-sm text-emerald-900 dark:text-emerald-300 flex items-center gap-2';
+        document.getElementById('feedbackGradeTitle').innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i> ${gradeTitle}`;
+        document.getElementById('feedbackScoreBadge').className = 'text-xs font-bold px-2 py-0.5 rounded bg-emerald-200 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200';
+        document.getElementById('feedbackScoreBadge').textContent = 'Correct';
+      } else {
+        box.className = 'p-5 rounded-xl border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 space-y-3';
+        document.getElementById('feedbackGradeTitle').className = 'font-bold text-sm text-rose-900 dark:text-rose-300 flex items-center gap-2';
+        document.getElementById('feedbackGradeTitle').innerHTML = `<i class="fa-solid fa-triangle-exclamation text-rose-600"></i> ${gradeTitle}`;
+        document.getElementById('feedbackScoreBadge').className = 'text-xs font-bold px-2 py-0.5 rounded bg-rose-200 text-rose-800 dark:bg-rose-900 dark:text-rose-200';
+        document.getElementById('feedbackScoreBadge').textContent = 'Review Needed';
+      }
+
+      document.getElementById('feedbackText').innerHTML = text;
+      document.getElementById('professorTip').innerHTML = `
+        <span class="font-bold text-slate-700 dark:text-slate-300">Professor Tip:</span> Always back up intuitive reasoning with official slide terminology like <em>Intergovernmentalism</em> or <em>Supranationalism</em>.
+      `;
+    }
+
+    function nextQuestion() {
+      quizIndex++;
+      if (quizIndex < filteredQuiz.length) {
+        renderQuestion();
+      } else {
+        showQuizResults();
+      }
+    }
+
+    function showQuizResults() {
+      const card = document.getElementById('questionCard');
+      const pct = Math.round((quizScore / filteredQuiz.length) * 100);
+      
+      card.innerHTML = `
+        <div class="text-center py-8 space-y-4">
+          <div class="inline-flex p-4 rounded-full ${pct >= 80 ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'} text-3xl">
+            <i class="fa-solid ${pct >= 80 ? 'fa-award' : 'fa-book-open'}"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Exam Completed!</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">Your Score: <strong class="text-brand-600 dark:text-brand-400 text-lg">${quizScore} / ${filteredQuiz.length} (${pct}%)</strong></p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+            ${pct >= 80 ? 'Outstanding performance! You demonstrate both solid logical understanding and strict academic phrasing.' : 'Good attempt! Review the flashcards and study notes to polish your political science terminology.'}
+          </p>
+          <div class="pt-4">
+            <button onclick="restartQuiz()" class="px-6 py-2.5 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition shadow-md">
+              Retake Exam
+            </button>
+          </div>
+        </div>
+      `;
+
+      updateMasteryUI(pct);
+    }
+
+    function updateMasteryUI(score = null) {
+      const mastery = score !== null ? score : 75;
+      document.getElementById('masteryPercent').textContent = `${mastery}%`;
+    }
+  </script>
+</body>
+</html>
